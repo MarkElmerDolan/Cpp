@@ -1,0 +1,21 @@
+Documentation Standards for Lab Projects
+
+Describe the purpose and objectives of the program
+	Include pseudocode
+	Include list of functions used and their relationship to the solution
+
+Document each function
+	Include as comments next to statements
+	State its purpose
+	Describe algorithms used
+	Decribe the input and output variables of a function
+	Describe key local variables
+	Choose good variable and function names
+
+Testing
+	Detail testing objectives
+	Include critical points of failure
+	Detail specific tests
+	Present test data and output
+
+Make document look professional
