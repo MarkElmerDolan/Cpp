@@ -36,16 +36,16 @@ Pseudocode
 	}
 	
 	sample commands
-	ls -l - store ls in command, store ls -l in argv, fork a child execute have parent wait, execute child, I/O unchanged
-	ls -l > out.txt
-		command 1: ls, argument 1: -l, Output redirected to "out.txt"
+	ls -l - store ls in command, store ls -l in argv, fork a child execute have parent wait, 
+		execute child, I/O unchanged
+	ls > out.txt
+		command 1: ls, Output redirected to "out.txt"
 	sort < main.cpp
 		command 1: sort, Input from "main.cpp"
 	ls &firefox
 		command 1: ls; Command 2: firefox, runs in background
 	ls | less
 		Command 1: ls, Output to "less"; Command 2: less, Input from "ls"
-
 */
 
 
