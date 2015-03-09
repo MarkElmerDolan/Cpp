@@ -1,0 +1,111 @@
+Mark Dolan
+CIS 3207 Project Two
+Write a UNIX shell program
+
+
+How are child processes created
+How can the parent process follow up on the child's work
+A shell is a command line interpreter that allows user to interact with the OS
+User input terminated by "Enter" key
+Usually fixed number of characters per line(80) and fixed number of lines(25)
+
+first clear the screen and print a prompt, which should include the machine name
+command for bash take the form "command [arg1] [arg2]..."
+commands are executable programs stored in /bin, implemented within the shell, or a specified path
+
+shell's job
+	find the file
+	prepare paramenters for the command
+	execute command
+
+Pass the parameters to the command as the argv array
+
+Shell must survive fatal errors
+
+functions
+	fork()
+		creates new process that is copy of original process
+		parent process fork returns the newly created child processes PID
+		child process fork returns zero
+
+	execvp(char* path, char* argv[])
+		changes the program that the current process is executing
+	wait(&int_status)
+		Process blocks itself until kernel signals it is ready to execute again
+		Can return as a result of a child process terminating
+
+	If & specified as operator for command then it runs concurrently with child, so parent should not wait()
+	each child process starts with stdin and stdout as the same as parent process so they would all output and input
+		from/to the same sources
+
+	'>' and '<' indicate I/O redirection < is stdin and > is stdout
+
+	pipes must be created by a common ancestor of the processes prior to creating the processes
+	pipe syntax is writer | reader
+	Have parent create pipe
+	spawn child
+	redirect stdout of parent to write end of pipe
+	execute parent command
+	redirect stdin child to read portion of pipe
+	have child execute second command
+	reader should flow from parent to child
+	call close for any portion of pipe that you aren't using
+	
+
+	
+extern char* environ[], used to get commands in PATH
+strerror(errno) - troubleshoot errors by viewing global variable errno
+
+Shell 
+
+Describe the purpose and objectives of the program
+The purpose of this program is to show some of the details of process creation on a UNIX environment.
+This is done by implementing a simple shell which includes features such as concurrency and I/O redirection
+The environment I used is a virtual machine running Debian, with VirtualBox
+
+Pseudocode
+	Set up shell/Initialize variables
+	Display the current directory
+	Listen for user input
+	while(input != "exit"){
+		Parse commands entered
+		organize commands
+		if( & operator){ Parent doesn't wait for child;}
+		if( < operator){ map next arg to stdin for relevant command;}
+		if( > operator){ map next arg to stdout for relevant command;}
+		if( | operator){ 
+			pipe syntax is writer | reader 
+			fork the writer arg
+			have writer arg create pipe
+			spawn reader
+			redirect stdout of writer to write end of pipe
+			execute writer command
+			redirect stdin reader to read portion of pipe
+			have reader execute second command
+			reader should flow from writer to reader 
+			call close for any portion of pipe that you aren't using
+		}
+		execute the commands
+		display current working directory
+		continue listening for user input
+	}
+	
+Include list of functions used and their relationship to the solution
+
+Document each function
+	Include as comments next to statements
+	State its purpose
+	Describe algorithms used
+	Decribe the input and output variables of a function
+	Describe key local variables
+	Choose good variable and function names
+
+Testing
+	Detail testing objectives
+	Include critical points of failure
+	Detail specific tests
+	Present test data and output
+
+Make document look professional
+
+	
