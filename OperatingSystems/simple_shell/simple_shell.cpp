@@ -45,9 +45,7 @@ Pseudocode
 		command 1: ls; Command 2: firefox, runs in background
 	ls | less
 		Command 1: ls, Output to "less"; Command 2: less, Input from "ls"
-
 */
-
 
 #include <iostream>
 #include <stdio.h>
@@ -230,17 +228,14 @@ void executeCommands(command **com){
 	pid_t pid;
 	while(com[i] != NULL){
 		if(com[i]->isPipedOut == true){ // next command isPipedIn should be true
-			//int thePipe[2];
 			pid = fork();
 			if(pid == 0){
-				//write(thePipe[1],output, len);
 				int newstdout = open("namedPipe",O_WRONLY|O_CREAT,S_IRWXG|S_IRWXO);
 				close(1);
 				dup(newstdout);	//copies contents of newstdout to first empty table entry
 				close(newstdout);
 				execvp(com[i]->argv[0], com[i]->argv);
 			}else if(pid > 0){ // wait for previous cammnd to finish then read from namedPipe
-				//read(thePipe[0], input, len);
 				int status = 0;
 				wait (&status);
 				i++; // reference next command
@@ -283,32 +278,3 @@ void executeCommands(command **com){
 		}
 	}
 }
-/*
-Include list of functions used and their relationship to the solution
-
-Document each function
-	Include as comments next to statements
-	State its purpose
-	Describe algorithms used
-	Decribe the input and output variables of a function
-	Describe key local variables
-	Choose good variable and function names
-
-Testing
-	Detail testing objectives
-	Include critical points of failure
-	Detail specific tests
-	Present test data and output
-
-cli_input.cpp
-file_io.cpp
-fork.cpp
-input.txt
-main.cpp
-my_log.txt
-output.txt
-pipe.cpp
-shell_report.txt
-standards.txt
-
-*/
